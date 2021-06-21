@@ -2,6 +2,7 @@ const int sensorPin = A0;
 int pinNumber = 0;
 int sensorVal = 0;
 float baseLineTemp = 0.0;
+int i = 0;
 
 void setup() 
 {
@@ -13,29 +14,33 @@ void setup()
   }
 }
 
-void loop()
-{
-  // Run Calibration function once
-  for(int i = 0; i < 1; i++)
+float CalibrateTemp(float x) //Function used to calibrate a temperature sensor to room ambient temperature
   {
-    // Calibrating the Temperature sensor
-    delay (5000);
-    float baseLineSensorVal = analogRead(sensorPin); 
+    // Calibrating the temperature sensor
     Serial.print("BASE LINE SENSOR VAL: ");
-    Serial.print(baseLineSensorVal);
-    // convert ADC reading to voltage I need to learn how to use functions.
-    float baseLineVoltage = (baseLineSensorVal/1024.0) * 5.0;
+    Serial.print(x);
+    // Convert ADC reading to voltage
+    float y = (x/1024.0) * 5.0;
     Serial.print(" BASE LINE VOLTAGE: ");
-    Serial.print(baseLineVoltage);
+    Serial.print(y);
     // Convert voltage into degrees C
-    float baseLineTemp = (baseLineVoltage - 0.5) * 100;
+    float z = (y - 0.5) * 100;
     Serial.print(" BASE LINE TEMP: ");
-    Serial.println(baseLineTemp);
-    Serial.print("BASE LINE TEMP: ");
-    Serial.println(baseLineTemp);
-    sensorVal = analogRead(sensorPin);
+    Serial.println(z);
+	return z;
   }
 
+
+
+void loop()
+{
+  if(int i = 0)
+  {
+	delay(5000);
+	baseLineTemp = CalibrateTemp(sensorVal);
+	i++;
+  }	
+  
   // Show Calibration
   Serial.print("Sensor Value: ");
   Serial.print(sensorVal);
